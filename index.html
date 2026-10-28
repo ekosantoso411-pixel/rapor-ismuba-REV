@@ -181,7 +181,7 @@
             </form>
 
             <div class="mt-6 text-center text-xs text-slate-400 border-t pt-4">
-                &copy; SMP Muhammadiyah 2 Depok Smart School
+                &copy; Developed by Eko Santoso
             </div>
         </div>
     </div>
@@ -2092,7 +2092,7 @@
                     surah: defaultSurahTarget[kelas] || 'Juz 30',
                     score: 90,
                     predikat: 'A',
-                    catatan: 'Hafalan lancar, makhrajul huruf dan tajwid sangat baik.'
+                    catatan: 'Ananda memiliki hafalan yang sangat kuat (mutqin), kelancaran yang luar biasa, serta mampu menerapkan kaidah tajwid (makhraj dan shifatul huruf) dengan sangat tepat. Irama dan tartilnya juga sangat baik.'
                 };
 
                 const tr = document.createElement('tr');
@@ -2120,14 +2120,30 @@
         function updateTahfidz(siswaId, field, value) {
             const key = `${siswaId}_TAHFIDZ_${state.tahunSemester}`;
             if(!state.tahfidz[key]) {
-                state.tahfidz[key] = { surah: 'Juz 30', score: 85, predikat: 'B', catatan: 'Lancar' };
+                state.tahfidz[key] = { surah: 'Juz 30', score: 85, predikat: 'B', catatan: 'Ananda memiliki hafalan yang lancar dan bagus. Secara umum, tajwid dan makhraj huruf sudah diterapkan dengan baik, hanya terdapat sedikit kekeliruan kecil yang bisa langsung diperbaiki saat diingatkan.' };
             }
 
             state.tahfidz[key][field] = value;
 
             if(field === 'score') {
                 const num = parseFloat(value) || 0;
-                state.tahfidz[key].predikat = num >= 90 ? 'A' : (num >= 75 ? 'B' : (num >= 61 ? 'C' : 'D'));
+                let predikat = 'D';
+                let catatan = 'Ananda belum mampu menguasai target hafalan dengan baik, masih perlu bimbingan, makhrajul huruf dan penerapan tajwid masih perlu diperbaiki melalui latihan rutin dan bimbingan intensif.';
+                
+                if (num >= 90) {
+                    predikat = 'A';
+                    catatan = 'Ananda memiliki hafalan yang sangat kuat (mutqin), kelancaran yang luar biasa, serta mampu menerapkan kaidah tajwid (makhraj dan shifatul huruf) dengan sangat tepat. Irama dan tartilnya juga sangat baik.';
+                } else if (num >= 75) {
+                    predikat = 'B';
+                    catatan = 'Ananda memiliki hafalan yang lancar dan bagus. Secara umum, tajwid dan makhraj huruf sudah diterapkan dengan baik, hanya terdapat sedikit kekeliruan kecil yang bisa langsung diperbaiki saat diingatkan.';
+                } else if (num >= 61) {
+                    predikat = 'C';
+                    catatan = 'Ananda telah menyelsaikan beberapa target hafalan, tetapi masih terdapat beberapa kesalahan dalam kelancaran, makhrajul huruf, dan penerapan tajwid sehingga perlu latihan';
+                }
+
+                state.tahfidz[key].predikat = predikat;
+                state.tahfidz[key].catatan = catatan;
+
                 loadTahfidzTable();
             }
 
@@ -2144,7 +2160,7 @@
                     surah: defaultSurahTarget[kelas] || 'Juz 30',
                     score: 92,
                     predikat: 'A',
-                    catatan: 'Fasih, lancar, serta makhraj dan tajwid sesuai kaidah Tartil.'
+                    catatan: 'Ananda memiliki hafalan yang sangat kuat (mutqin), kelancaran yang luar biasa, serta mampu menerapkan kaidah tajwid (makhraj dan shifatul huruf) dengan sangat tepat. Irama dan tartilnya juga sangat baik.'
                 };
             });
 
@@ -2169,7 +2185,7 @@
                 const key = `${s.id}_PEMBIASAAN_${state.tahunSemester}`;
                 let pData = state.pembiasaan[key] || {
                     predikat: 'Sangat Baik',
-                    deskripsi: 'Shalat berjamaah tepat waktu, santun kepada guru dan kawan, serta aktif dalam kegiatan keagamaan.'
+                    deskripsi: 'Ananda shalat berjamaah tepat waktu dan tertib, santun kepada guru dan kawan, serta aktif dalam kegiatan keagamaan.'
                 };
 
                 const tr = document.createElement('tr');
@@ -2182,7 +2198,7 @@
                             <option value="Sangat Baik" ${pData.predikat==='Sangat Baik'?'selected':''}>Sangat Baik</option>
                             <option value="Baik" ${pData.predikat==='Baik'?'selected':''}>Baik</option>
                             <option value="Cukup" ${pData.predikat==='Cukup'?'selected':''}>Cukup</option>
-                            <option value="Perlu Pembinaan" ${pData.predikat==='Perlu Pembinaan'?'selected':''}>Perlu Pembinaan</option>
+                            <option value="Perlu Bimbingan" ${pData.predikat==='Perlu Bimbingan'?'selected':''}>Perlu Bimbingan</option>
                         </select>
                     </td>
                     <td class="p-3">
@@ -2195,10 +2211,38 @@
 
         function updatePembiasaan(siswaId, field, value) {
             const key = `${siswaId}_PEMBIASAAN_${state.tahunSemester}`;
+            
+            // Jika object belum ada, set default fallback value
             if(!state.pembiasaan[key]) {
-                state.pembiasaan[key] = { predikat: 'Baik', deskripsi: 'Disiplin dan taat ibadah' };
+                state.pembiasaan[key] = { 
+                    predikat: 'Baik', 
+                    deskripsi: 'Ananda melaksanakan shalat berjamaah dengan tertib, bersikap santun kepada guru dan kawan, serta mengikuti kegiatan keagamaan dengan baik.' 
+                };
             }
+            
             state.pembiasaan[key][field] = value;
+
+            // Auto-generate Deskripsi jika Predikat diubah
+            if (field === 'predikat') {
+                let autoDeskripsi = '';
+                if (value === 'Sangat Baik') {
+                    autoDeskripsi = "Ananda shalat berjamaah tepat waktu dan tertib, santun kepada guru dan kawan, serta aktif dalam kegiatan keagamaan.";
+                } else if (value === 'Baik') {
+                    autoDeskripsi = "Ananda melaksanakan shalat berjamaah dengan tertib, bersikap santun kepada guru dan kawan, serta mengikuti kegiatan keagamaan dengan baik.";
+                } else if (value === 'Cukup') {
+                    autoDeskripsi = "Ananda mulai membiasakan diri melaksanakan shalat berjamaah, bersikap santun kepada guru dan kawan, serta mengikuti kegiatan keagamaan dengan arahan.";
+                } else if (value === 'Perlu Bimbingan') {
+                    autoDeskripsi = "Ananda perlu bimbingan dan pendampingan dalam membiasakan shalat berjamaah tepat waktu, bersikap santun kepada guru dan kawan, serta berpartisipasi aktif dalam kegiatan keagamaan.";
+                }
+                
+                if (autoDeskripsi) {
+                    state.pembiasaan[key]['deskripsi'] = autoDeskripsi;
+                }
+                
+                // Re-render the table row so the new description reflects in the input immediately
+                loadPembiasaanTable();
+            }
+
             saveDataToStorage();
         }
 
@@ -2210,7 +2254,7 @@
                 const key = `${s.id}_PEMBIASAAN_${state.tahunSemester}`;
                 state.pembiasaan[key] = {
                     predikat: 'Sangat Baik',
-                    deskripsi: 'Selalu rajin shalat dhuha dan berjamaah, bersikap sopan santun, serta aktif dalam kegiatan keislaman.'
+                    deskripsi: 'Ananda shalat berjamaah tepat waktu dan tertib, santun kepada guru dan kawan, serta aktif dalam kegiatan keagamaan.'
                 };
             });
 
@@ -2320,7 +2364,7 @@
                                     <h2 class="font-bold text-slate-900 text-base uppercase tracking-wide leading-tight">MAJELIS PENDIDIKAN DASAR MENENGAH DAN PNF</h2>
                                     <h2 class="font-bold text-slate-900 text-base uppercase tracking-wide leading-tight">PIMPINAN DAERAH MUHAMMADIYAH KABUPATEN SLEMAN</h2>
                                     <h3 class="font-extrabold text-slate-1000 text-lg uppercase leading-tight">${cfg.namaSekolah || 'SMP MUHAMMADIYAH 2 DEPOK'}</h3>
-                                    <p class="text-[8.5pt] text-slate-700 font-medium">${cfg.alamatSekolah || 'Jl. Swadaya IV, Karangasem, Condongcatur, Depok, Sleman | Email: smpmuh2depok@gmail.com'}</p>
+                                    <p class="text-[8pt] text-slate-700 font-medium whitespace-nowrap tracking-tight mt-0.5">${cfg.alamatSekolah || 'Jl. Swadaya IV, Karangasem, Condongcatur, Depok, Sleman | Telp: (0274) 4462295 | Web: smpmuh2depok.sch.id'}</p>
                                 </div>
                             </div>
                         </div>
