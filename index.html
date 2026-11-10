@@ -181,7 +181,7 @@
             </form>
 
             <div class="mt-6 text-center text-xs text-slate-400 border-t pt-4">
-                &copy; Dikembangkan oleh Eko Santoso - SMP Muhammadiyah 2 Depok
+                &copy; Developed by Eko Santoso - SMP Muhammadiyah 2 Depok
             </div>
         </div>
     </div>
@@ -247,6 +247,12 @@
                         class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition">
                         <i data-lucide="heart-handshake" class="w-4 h-4"></i>
                         <span>Pembiasaan Karakter</span>
+                    </button>
+
+                    <button onclick="switchTab('leger')" id="nav-leger"
+                        class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                        <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                        <span>Leger Nilai Kelas</span>
                     </button>
 
                     <button onclick="switchTab('rapor')" id="nav-rapor"
@@ -730,6 +736,46 @@
                                     </tr>
                                 </thead>
                                 <tbody id="pembiasaanTableBody" class="divide-y divide-slate-200 text-xs">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-leger" class="tab-content hidden">
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm mb-4 space-y-4">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div>
+                                <h2 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+                                    <i data-lucide="clipboard-list" class="w-5 h-5 text-emerald-600"></i>
+                                    Rekap Leger Nilai Kelas
+                                </h2>
+                                <p class="text-xs text-slate-500">Rekapitulasi nilai seluruh mata pelajaran ISMUBA per kelas.</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="exportLegerExcel()" class="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-sm font-semibold flex items-center gap-2 shadow transition">
+                                    <i data-lucide="download" class="w-4 h-4"></i>
+                                    <span>Unduh Leger (.xlsx)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200 w-full md:w-auto">
+                            <label class="text-xs font-semibold text-slate-600">Pilih Kelas:</label>
+                            <select id="legerSelectKelas" onchange="renderLegerTable()" class="text-xs p-2 border border-slate-300 rounded bg-white outline-none w-48 focus:ring-1 focus:ring-emerald-500">
+                                <!-- Pilihan otomatis dirender oleh applyTeacherClassFilter() -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-left whitespace-nowrap">
+                                <thead id="legerTableHead" class="bg-slate-100 text-xs font-semibold text-slate-600 uppercase border-b">
+                                    <!-- Header mapel dinamis -->
+                                </thead>
+                                <tbody id="legerTableBody" class="divide-y divide-slate-200 text-xs">
+                                    <!-- Data nilai siswa dinamis -->
                                 </tbody>
                             </table>
                         </div>
@@ -1455,7 +1501,7 @@
             const allowedKelas = isSuperadmin ? allKelas : 
                 (state.userData.kelas_diampu ? state.userData.kelas_diampu.split(',').map(k => k.trim()) : []);
 
-            const classSelects = ['nilaiSelectKelas', 'tahfidzSelectKelas', 'pembiasaanSelectKelas', 'raporSelectKelas'];
+            const classSelects = ['nilaiSelectKelas', 'tahfidzSelectKelas', 'pembiasaanSelectKelas', 'raporSelectKelas', 'legerSelectKelas'];
             
             classSelects.forEach(id => {
                 const select = document.getElementById(id);
@@ -1509,6 +1555,7 @@
                 'nilai': 'Input & Pengolahan Nilai ISMUBA',
                 'tahfidz': 'Capaian Tahfidz Al-Qur\'an',
                 'pembiasaan': 'Penilaian Pembiasaan Karakter',
+                'leger': 'Rekap Leger Nilai Kelas',
                 'rapor': 'Pratinjau & Cetak Rapor (F4)'
             };
             document.getElementById('pageTitle').innerText = titles[tabId] || 'eRapor ISMUBA';
@@ -1520,6 +1567,7 @@
             if(tabId === 'nilai') populateMapelDropdownNilai(); // Fungsi ini telah dimodifikasi (lihat bawah)
             if(tabId === 'tahfidz') loadTahfidzTable();
             if(tabId === 'pembiasaan') loadPembiasaanTable();
+            if(tabId === 'leger') renderLegerTable();
             if(tabId === 'rapor') updateRaporSiswaList();
         }
 
@@ -2583,6 +2631,139 @@
                 });
                 container.innerHTML = allHtml;
             }
+        }
+
+        // --- FUNGSI RENDER TABEL LEGER ---
+        function renderLegerTable() {
+            const kelas = document.getElementById('legerSelectKelas').value;
+            const thead = document.getElementById('legerTableHead');
+            const tbody = document.getElementById('legerTableBody');
+            
+            thead.innerHTML = '';
+            tbody.innerHTML = '';
+
+            if (!kelas) {
+                tbody.innerHTML = `<tr><td class="p-4 text-center text-red-500 font-medium">Akses kelas tidak tersedia.</td></tr>`;
+                return;
+            }
+
+            const siswaInKelas = state.siswa.filter(s => s.kelas === kelas);
+            // Ambil jenjang (contoh '7' dari '7A')
+            const jenjang = kelas.substring(0, 1); 
+            // Cari mapel khusus kelas tersebut atau jenjangnya
+            const mapelKelas = state.mapel.filter(m => m.kelas === 'Semua' || m.kelas === jenjang || m.kelas === kelas);
+
+            if (siswaInKelas.length === 0) {
+                tbody.innerHTML = `<tr><td class="p-4 text-center text-slate-500">Tidak ada data siswa di kelas ${kelas}.</td></tr>`;
+                return;
+            }
+
+            // 1. Buat Header Kolom Secara Dinamis
+            let headerHTML = `<tr>
+                <th class="p-3 w-12 text-center border-r border-slate-200">No</th>
+                <th class="p-3 border-r border-slate-200">NIS / NISN</th>
+                <th class="p-3 border-r border-slate-200 min-w-[200px]">Nama Lengkap</th>`;
+            
+            mapelKelas.forEach(m => {
+                headerHTML += `<th class="p-3 text-center border-r border-slate-200" title="${m.nama}">${m.kode}</th>`;
+            });
+            
+            headerHTML += `
+                <th class="p-3 text-center border-r border-slate-200 bg-emerald-50">Jumlah</th>
+                <th class="p-3 text-center bg-emerald-50">Rata-Rata</th>
+            </tr>`;
+            thead.innerHTML = headerHTML;
+
+            // 2. Buat Isi Baris per Siswa
+            siswaInKelas.forEach((s, idx) => {
+                let rowHTML = `<tr class="hover:bg-slate-50">
+                    <td class="p-3 text-center border-r border-slate-200 text-slate-500">${idx + 1}</td>
+                    <td class="p-3 border-r border-slate-200 font-mono text-slate-600">${s.nis}</td>
+                    <td class="p-3 border-r border-slate-200 font-bold text-slate-800">${s.nama}</td>`;
+                
+                let totalNilai = 0;
+                let mapelTerisi = 0;
+
+                // Tarik setiap nilai berdasarkan relasi ID Siswa dan Kode Mapel
+                mapelKelas.forEach(m => {
+                    const key = `${s.id}_${m.kode}_${state.tahunSemester}`;
+                    const score = state.nilai[key];
+                    const textScore = score !== undefined ? score : '-';
+                    
+                    if(score !== undefined && !isNaN(score)) {
+                        totalNilai += parseFloat(score);
+                        mapelTerisi++;
+                    }
+                    
+                    rowHTML += `<td class="p-3 text-center border-r border-slate-200 font-medium ${score === undefined ? 'text-slate-300' : 'text-slate-800'}">${textScore}</td>`;
+                });
+
+                // Hitung Rata-Rata (dibagi jumlah total mapel yang seharusnya ada)
+                const rataRata = mapelKelas.length > 0 ? (totalNilai / mapelKelas.length).toFixed(1) : 0;
+                
+                rowHTML += `
+                    <td class="p-3 text-center border-r border-slate-200 font-bold text-emerald-800 bg-emerald-50/50">${totalNilai > 0 ? totalNilai : '-'}</td>
+                    <td class="p-3 text-center font-bold text-emerald-800 bg-emerald-50/50">${totalNilai > 0 ? rataRata : '-'}</td>
+                </tr>`;
+                
+                tbody.innerHTML += rowHTML;
+            });
+            
+            if(window.lucide) lucide.createIcons();
+        }
+
+        // --- FUNGSI EXPORT LEGER KE EXCEL (.XLSX) ---
+        function exportLegerExcel() {
+            const kelas = document.getElementById('legerSelectKelas').value;
+            if (!kelas) return showToast('Pilih kelas terlebih dahulu.', 'error');
+
+            const siswaInKelas = state.siswa.filter(s => s.kelas === kelas);
+            const jenjang = kelas.substring(0, 1);
+            const mapelKelas = state.mapel.filter(m => m.kelas === 'Semua' || m.kelas === jenjang || m.kelas === kelas);
+
+            // Mapping data JSON mentah menjadi Array Object siap ekspor
+            const exportData = siswaInKelas.map((s, idx) => {
+                let rowData = {
+                    'No': idx + 1,
+                    'NIS/NISN': s.nis,
+                    'Nama Siswa': s.nama
+                };
+
+                let total = 0;
+
+                mapelKelas.forEach(m => {
+                    const key = `${s.id}_${m.kode}_${state.tahunSemester}`;
+                    const score = state.nilai[key];
+                    // Nama kolom mapel akan menjadi "Aqidah Akhlak (AA-07)"
+                    rowData[`${m.nama} (${m.kode})`] = score !== undefined ? score : '';
+                    
+                    if (score !== undefined && !isNaN(score)) {
+                        total += parseFloat(score);
+                    }
+                });
+
+                rowData['Total Nilai'] = total > 0 ? total : '';
+                rowData['Rata-Rata'] = mapelKelas.length > 0 && total > 0 ? Number((total / mapelKelas.length).toFixed(2)) : '';
+
+                return rowData;
+            });
+
+            // Konversi ke format Workbook SheetJS
+            const ws = XLSX.utils.json_to_sheet(exportData);
+            const wb = XLSX.utils.book_new();
+            
+            // Set lebar kolom otomatis agar rapi
+            const wscols = [{wch:5}, {wch:15}, {wch:30}]; // Lebar No, NIS, Nama
+            mapelKelas.forEach(() => wscols.push({wch:20})); // Lebar Mapel
+            wscols.push({wch:12}, {wch:12}); // Lebar Total, Rata-rata
+            ws['!cols'] = wscols;
+
+            XLSX.utils.book_append_sheet(wb, ws, `Leger Kelas ${kelas}`);
+            
+            // Simpan File
+            const cleanSemester = state.tahunSemester.replace(/\//g, '-').replace(/\s+/g, '_');
+            XLSX.writeFile(wb, `Leger_Nilai_ISMUBA_Kelas_${kelas}_${cleanSemester}.xlsx`);
+            showToast(`Leger Kelas ${kelas} berhasil diunduh.`, 'success');
         }
 
         window.addEventListener('DOMContentLoaded', () => {
