@@ -181,7 +181,7 @@
             </form>
 
             <div class="mt-6 text-center text-xs text-slate-400 border-t pt-4">
-                &copy; Developed by Eko Santoso - SMP Muhammadiyah 2 Depok
+                &copy; Dikembangkan oleh Eko Santoso - SMP Muhammadiyah 2 Depok
             </div>
         </div>
     </div>
@@ -605,24 +605,14 @@
                             <div>
                                 <label class="block text-[11px] font-semibold text-slate-600 mb-1">Pilih Kelas:</label>
                                 <select id="nilaiSelectKelas" onchange="loadNilaiForm()" class="w-full text-xs p-2 border border-slate-300 rounded bg-white outline-none">
-                                    <option value="7A">Kelas 7A</option>
-                                    <option value="7B">Kelas 7B</option>
-                                    <option value="7C">Kelas 7C</option>
-                                    <option value="7D">Kelas 7D</option>
-                                    <option value="8A">Kelas 8A</option>
-                                    <option value="8B">Kelas 8B</option>
-                                    <option value="8C">Kelas 8C</option>
-                                    <option value="8D">Kelas 8D</option>
-                                    <option value="9A">Kelas 9A</option>
-                                    <option value="9B">Kelas 9B</option>
-                                    <option value="9C">Kelas 9C</option>
-                                    <option value="9D">Kelas 9D</option>
+                                    <!-- Options will be populated by applyTeacherClassFilter() -->
                                 </select>
                             </div>
 
                             <div>
                                 <label class="block text-[11px] font-semibold text-slate-600 mb-1">Pilih Mata Pelajaran:</label>
                                 <select id="nilaiSelectMapel" onchange="loadNilaiForm()" class="w-full text-xs p-2 border border-slate-300 rounded bg-white outline-none">
+                                    <!-- Options will be populated by populateMapelDropdownNilai() -->
                                 </select>
                             </div>
 
@@ -676,18 +666,7 @@
                         <div class="flex items-center gap-3 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
                             <span class="text-xs font-medium text-slate-600">Pilih Kelas Tahfidz:</span>
                             <select id="tahfidzSelectKelas" onchange="loadTahfidzTable()" class="text-xs p-1.5 border border-slate-300 rounded bg-white outline-none">
-                                <option value="7A">Kelas 7A</option>
-                                <option value="7B">Kelas 7B</option>
-                                <option value="7C">Kelas 7C</option>
-                                <option value="7D">Kelas 7D</option>
-                                <option value="8A">Kelas 8A</option>
-                                <option value="8B">Kelas 8B</option>
-                                <option value="8C">Kelas 8C</option>
-                                <option value="8D">Kelas 8D</option>
-                                <option value="9A">Kelas 9A</option>
-                                <option value="9B">Kelas 9B</option>
-                                <option value="9C">Kelas 9C</option>
-                                <option value="9D">Kelas 9D</option>
+                                <!-- Options will be populated by applyTeacherClassFilter() -->
                             </select>
                         </div>
                     </div>
@@ -734,18 +713,7 @@
                         <div class="flex items-center gap-3 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
                             <span class="text-xs font-medium text-slate-600">Pilih Kelas Pembiasaan:</span>
                             <select id="pembiasaanSelectKelas" onchange="loadPembiasaanTable()" class="text-xs p-1.5 border border-slate-300 rounded bg-white outline-none">
-                                <option value="7A">Kelas 7A</option>
-                                <option value="7B">Kelas 7B</option>
-                                <option value="7C">Kelas 7C</option>
-                                <option value="7D">Kelas 7D</option>
-                                <option value="8A">Kelas 8A</option>
-                                <option value="8B">Kelas 8B</option>
-                                <option value="8C">Kelas 8C</option>
-                                <option value="8D">Kelas 8D</option>
-                                <option value="9A">Kelas 9A</option>
-                                <option value="9B">Kelas 9B</option>
-                                <option value="9C">Kelas 9C</option>
-                                <option value="9D">Kelas 9D</option>
+                                <!-- Options will be populated by applyTeacherClassFilter() -->
                             </select>
                         </div>
                     </div>
@@ -798,18 +766,7 @@
                             <div>
                                 <label class="block text-[11px] font-semibold text-slate-600 mb-1">Pilih Kelas:</label>
                                 <select id="raporSelectKelas" onchange="updateRaporSiswaList()" class="w-full text-xs p-2 border border-slate-300 rounded bg-white outline-none">
-                                    <option value="7A" selected>Kelas 7A</option>
-                                    <option value="7B">Kelas 7B</option>
-                                    <option value="7C">Kelas 7C</option>
-                                    <option value="7D">Kelas 7D</option>
-                                    <option value="8A">Kelas 8A</option>
-                                    <option value="8B">Kelas 8B</option>
-                                    <option value="8C">Kelas 8C</option>
-                                    <option value="8D">Kelas 8D</option>
-                                    <option value="9A">Kelas 9A</option>
-                                    <option value="9B">Kelas 9B</option>
-                                    <option value="9C">Kelas 9C</option>
-                                    <option value="9D">Kelas 9D</option>
+                                    <!-- Options will be populated by applyTeacherClassFilter() -->
                                 </select>
                             </div>
 
@@ -919,20 +876,39 @@
     </div>
 
     <script>
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxne7FiFp1IoqyOT8dgmHg5OVdY0Pw0Hzkq0hr0Q9wty_7XkIWE9k6CH-Bmwi1TJ9Az/exec";
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0sjlao4oorPJnazK3aq3RrMyIbWA2br5-egOuCeHK0hH-hVgVGIEootjKJEt_60BD/exec";
 
+        // MOCKUP OFFLINE BACKUP (Sudah ditambahkan contoh akses kelas & mapel)
         const backupUsers = {
             'admin': { pass: 'admin123', nama: 'Administrator ISMUBA', role: 'Superadmin' },
-            'guru.ismuba': { pass: 'yanu123', nama: 'Bpk. Yanu Priyanto, S.Pd.', role: 'Guru ISMUBA' },
-            'ganjar': { pass: 'ganjar123', nama: 'Ganjar Rahmawan Adiprana, M.Pd.', role: 'Guru ISMUBA' }
+            'guru.ismuba': { pass: 'yanu123', nama: 'Bpk. Yanu Priyanto, S.Pd.', role: 'Guru ISMUBA', kelas_diampu: '7A, 7B, 7C', mapel_diampu: 'AI-01, KMH-01' },
+            'ganjar': { pass: 'ganjar123', nama: 'Ganjar Rahmawan Adiprana, M.Pd.', role: 'Guru ISMUBA', kelas_diampu: '8A, 8B', mapel_diampu: 'AI-02, BAR-01' }
         };
 
         const defaultMapel = [
-            { id: 'm1', kode: 'AI-01', nama: 'Al-Qur\'an Hadits', kelas: 'Semua', kktp: 75, cp: 'Membaca, menghafal, serta memahami kandungan ayat-ayat Al-Qur\'an dan Hadits pilihan tentang peribadatan dan keutamaan menuntut ilmu.' },
-            { id: 'm2', kode: 'AI-02', nama: 'Aqidah Akhlak', kelas: 'Semua', kktp: 75, cp: 'Memahami pilar Rukun Iman, Asmaul Husna, serta menerapkan perilaku akhlakul karimah kepada kedua orang tua, guru, dan sesama.' },
-            { id: 'm3', kode: 'AI-03', nama: 'Fiqih Ibadah', kelas: 'Semua', kktp: 75, cp: 'Memahami dan mempraktikkan tata cara thaharah, shalat fardhu dan sunnah, puasa, serta prinsip-prinsip ibadah harian.' },
-            { id: 'm4', kode: 'KMH-01', nama: 'Kemuhammadiyahan', kelas: 'Semua', kktp: 75, cp: 'Memahami sejarah, maksud, dan tujuan persyarikatan Muhammadiyah, janji pelajar Muhammadiyah, serta peran Organisasi Otonom.' },
-            { id: 'm5', kode: 'BAR-01', nama: 'Bahasa Arab', kelas: 'Semua', kktp: 75, cp: 'Menguasai kosa kata (Mufradat), percakapan dasar (Hiwar), dan tata bahasa Arab sederhana dalam kehidupan sehari-hari.' }
+            // KELAS 7
+            { id: 'm1_7', kode: 'AA-07', nama: 'Akidah Akhlak', kelas: '7', kktp: 75, cp: 'Memahami pilar Rukun Iman, Asmaul Husna, serta menerapkan perilaku akhlakul karimah.' },
+            { id: 'm2_7', kode: 'QH-07', nama: 'Al-Quran Hadits', kelas: '7', kktp: 75, cp: 'Membaca, menghafal, serta memahami kandungan ayat-ayat Al-Qur\'an dan Hadits pilihan.' },
+            { id: 'm3_7', kode: 'FKH-07', nama: 'Fikih', kelas: '7', kktp: 75, cp: 'Memahami dan mempraktikkan tata cara ibadah harian sesuai tuntunan.' },
+            { id: 'm4_7', kode: 'TRH-07', nama: 'Tarikh', kelas: '7', kktp: 75, cp: 'Memahami sejarah kebudayaan Islam dan meneladani kisah para tokoh Islam.' },
+            { id: 'm5_7', kode: 'KMH-07', nama: 'Kemuhammadiyahan', kelas: '7', kktp: 75, cp: 'Memahami sejarah, maksud, dan tujuan persyarikatan Muhammadiyah.' },
+            { id: 'm6_7', kode: 'BA-07', nama: 'Bahasa Arab', kelas: '7', kktp: 75, cp: 'Menguasai kosa kata (Mufradat) dan percakapan dasar (Hiwar) Bahasa Arab.' },
+            
+            // KELAS 8
+            { id: 'm1_8', kode: 'AA-08', nama: 'Akidah Akhlak', kelas: '8', kktp: 75, cp: 'Mendalami dan mengamalkan nilai-nilai akhlakul karimah dalam pergaulan.' },
+            { id: 'm2_8', kode: 'QH-08', nama: 'Al-Quran Hadits', kelas: '8', kktp: 75, cp: 'Melanjutkan hafalan dan pemahaman kandungan ayat-ayat Al-Qur\'an dan Hadits.' },
+            { id: 'm3_8', kode: 'FKH-08', nama: 'Fikih', kelas: '8', kktp: 75, cp: 'Mempelajari dan mempraktikkan hukum-hukum muamalah dan ibadah lanjutan.' },
+            { id: 'm4_8', kode: 'TRH-08', nama: 'Tarikh', kelas: '8', kktp: 75, cp: 'Mengambil hikmah dari sejarah perkembangan peradaban Islam di berbagai masa.' },
+            { id: 'm5_8', kode: 'KMH-08', nama: 'Kemuhammadiyahan', kelas: '8', kktp: 75, cp: 'Memahami struktur organisasi, peran Ortom, dan amal usaha Muhammadiyah.' },
+            { id: 'm6_8', kode: 'BA-08', nama: 'Bahasa Arab', kelas: '8', kktp: 75, cp: 'Mampu menyusun kalimat sempurna dan memahami tata bahasa Arab (Qawaid) tingkat menengah.' },
+            
+            // KELAS 9
+            { id: 'm1_9', kode: 'AA-09', nama: 'Akidah Akhlak', kelas: '9', kktp: 75, cp: 'Mengaplikasikan prinsip-prinsip akidah yang lurus dalam menghadapi tantangan zaman.' },
+            { id: 'm2_9', kode: 'QH-09', nama: 'Al-Quran Hadits', kelas: '9', kktp: 75, cp: 'Menyelesaikan target hafalan dan mampu menganalisis dalil Al-Quran dan Hadits.' },
+            { id: 'm3_9', kode: 'FKH-09', nama: 'Fikih', kelas: '9', kktp: 75, cp: 'Mengkaji hukum perkawinan, waris, dan jinayat tingkat dasar sesuai tarjih.' },
+            { id: 'm4_9', kode: 'TRH-09', nama: 'Tarikh', kelas: '9', kktp: 75, cp: 'Menganalisis sejarah masuk dan berkembangnya Islam di Nusantara.' },
+            { id: 'm5_9', kode: 'KMH-09', nama: 'Kemuhammadiyahan', kelas: '9', kktp: 75, cp: 'Memahami dinamika peran Muhammadiyah dalam kebangsaan dan kemanusiaan universal.' },
+            { id: 'm6_9', kode: 'BA-09', nama: 'Bahasa Arab', kelas: '9', kktp: 75, cp: 'Mampu memahami teks bacaan Arab, berdialog, dan menulis karangan singkat (Insya).' }
         ];
 
         const defaultSiswa = [
@@ -962,18 +938,17 @@
             nipKepsek: '1060557'
         };
 
-        // Kunci di awal sudah diupdate formatnya agar rapi: [ID Siswa]_[Kode Mapel]_[Semester]
         const initialDemoNilai = {
-            '7A-01_AI-01_2026/2027 - Semester Ganjil': 92,
-            '7A-01_AI-02_2026/2027 - Semester Ganjil': 88,
-            '7A-01_AI-03_2026/2027 - Semester Ganjil': 95,
-            '7A-01_KMH-01_2026/2027 - Semester Ganjil': 85,
-            '7A-01_BAR-01_2026/2027 - Semester Ganjil': 90,
-            '7A-02_AI-01_2026/2027 - Semester Ganjil': 85,
-            '7A-02_AI-02_2026/2027 - Semester Ganjil': 90,
-            '7A-02_AI-03_2026/2027 - Semester Ganjil': 86,
-            '7A-02_KMH-01_2026/2027 - Semester Ganjil': 89,
-            '7A-02_BAR-01_2026/2027 - Semester Ganjil': 84
+            '7A-01_QH-07_2026/2027 - Semester Ganjil': 92,
+            '7A-01_AA-07_2026/2027 - Semester Ganjil': 88,
+            '7A-01_FKH-07_2026/2027 - Semester Ganjil': 95,
+            '7A-01_KMH-07_2026/2027 - Semester Ganjil': 85,
+            '7A-01_BA-07_2026/2027 - Semester Ganjil': 90,
+            '7A-02_QH-07_2026/2027 - Semester Ganjil': 85,
+            '7A-02_AA-07_2026/2027 - Semester Ganjil': 90,
+            '7A-02_FKH-07_2026/2027 - Semester Ganjil': 86,
+            '7A-02_KMH-07_2026/2027 - Semester Ganjil': 89,
+            '7A-02_BA-07_2026/2027 - Semester Ganjil': 84
         };
 
         let state = {
@@ -988,15 +963,13 @@
             pembiasaan: JSON.parse(localStorage.getItem('ismuba_pembiasaan')) || {}
         };
 
-        // --- FUNGSI MIGRASI KEY LAMA (AGAR DATA SEBELUMNYA TIDAK HILANG SAAT UPDATE FORMAT) ---
+        // --- FUNGSI MIGRASI KEY LAMA ---
         function migrateOldKeysToReadableKeys() {
             let migrated = false;
 
-            // 1. Migrasi Data Nilai (Merubah dari m1/m2 ke Kode Mapel AI-01 dsb)
             const newNilai = {};
             Object.keys(state.nilai).forEach(oldKey => {
                 const parts = oldKey.split('_');
-                // Jika ID Mapel nya masih pakai huruf 'm' (misal: m1, m2)
                 if (parts.length >= 3 && parts[1].startsWith('m') && parts[1].length < 4) {
                     const siswaId = parts[0];
                     const mapelId = parts[1];
@@ -1016,7 +989,6 @@
             });
             if (migrated) state.nilai = newNilai;
 
-            // 2. Migrasi Data Tahfidz (Menyisipkan kata TAHFIDZ di key)
             const newTahfidz = {};
             Object.keys(state.tahfidz).forEach(oldKey => {
                 if (!oldKey.includes('_TAHFIDZ_')) {
@@ -1034,7 +1006,6 @@
             });
             if (migrated) state.tahfidz = newTahfidz;
 
-            // 3. Migrasi Data Pembiasaan (Menyisipkan kata PEMBIASAAN di key)
             const newPembiasaan = {};
             Object.keys(state.pembiasaan).forEach(oldKey => {
                 if (!oldKey.includes('_PEMBIASAAN_')) {
@@ -1057,7 +1028,6 @@
                 console.log("Migrasi key ke format baru (readable) berhasil dilakukan.");
             }
         }
-        // Jalankan migrasi begitu state didefinisikan
         migrateOldKeysToReadableKeys();
         // ----------------------------------------------------------------------------------
 
@@ -1347,7 +1317,10 @@
                         success: true,
                         nama: matched.nama || matched.Nama || matched.name || username,
                         role: matched.role || matched.Role || 'Guru ISMUBA',
-                        nip: matched.nip || matched.NIP || matched.nbm || matched.NBM || ''
+                        nip: matched.nip || matched.NIP || matched.nbm || matched.NBM || '',
+                        // MENANGKAP ATRIBUT KELAS DAN MAPEL DARI GOOGLE SHEETS
+                        kelas_diampu: matched.kelas_diampu || matched.Kelas_Diampu || matched.kelas || '',
+                        mapel_diampu: matched.mapel_diampu || matched.Mapel_Diampu || matched.mapel || ''
                     };
                 } else {
                     return { success: false, message: 'Username atau password tidak ditemukan di Google Sheet.' };
@@ -1360,7 +1333,10 @@
                     success: true,
                     nama: uData.nama || uData.Nama || uData.name || username,
                     role: uData.role || uData.Role || 'Guru ISMUBA',
-                    nip: uData.nip || uData.NIP || uData.nbm || uData.NBM || ''
+                    nip: uData.nip || uData.NIP || uData.nbm || uData.NBM || '',
+                    // MENANGKAP ATRIBUT KELAS DAN MAPEL DARI GOOGLE SHEETS
+                    kelas_diampu: uData.kelas_diampu || uData.Kelas_Diampu || uData.kelas || '',
+                    mapel_diampu: uData.mapel_diampu || uData.Mapel_Diampu || uData.mapel || ''
                 };
             }
 
@@ -1428,6 +1404,13 @@
                 state.userData = authenticatedUser;
                 state.tahunSemester = ts;
 
+                // --- MENYIMPAN SESI LOGIN KE LOCAL STORAGE ---
+                localStorage.setItem('ismuba_session', JSON.stringify({
+                    user: state.user,
+                    userData: state.userData,
+                    tahunSemester: state.tahunSemester
+                }));
+
                 const displayName = authenticatedUser.nama || u.toUpperCase();
                 document.getElementById('sessionUserDisplay').innerText = displayName;
                 document.getElementById('sessionTaDisplay').innerText = ts;
@@ -1445,6 +1428,10 @@
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('mainDashboard').classList.remove('hidden');
 
+                // TERAPKAN FILTER KELAS & MAPEL SEBELUM MEMUAT DASHBOARD
+                applyTeacherClassFilter();
+                populateMapelDropdownNilai();
+
                 initDashboardData();
 
                 if (usedBackup) {
@@ -1457,9 +1444,42 @@
             }
         });
 
+        // --- FUNGSI FILTER KELAS GURU ---
+        function applyTeacherClassFilter() {
+            if (!state.userData) return;
+            
+            const isSuperadmin = state.userData.role === 'Superadmin';
+            const allKelas = ['7A','7B','7C','7D','8A','8B','8C','8D','9A','9B','9C','9D'];
+            
+            // Ekstrak list kelas yang diperbolehkan
+            const allowedKelas = isSuperadmin ? allKelas : 
+                (state.userData.kelas_diampu ? state.userData.kelas_diampu.split(',').map(k => k.trim()) : []);
+
+            const classSelects = ['nilaiSelectKelas', 'tahfidzSelectKelas', 'pembiasaanSelectKelas', 'raporSelectKelas'];
+            
+            classSelects.forEach(id => {
+                const select = document.getElementById(id);
+                if(select) {
+                    select.innerHTML = ''; 
+                    if(allowedKelas.length === 0) {
+                        select.innerHTML = `<option value="">-- Akses Kelas Kosong --</option>`;
+                    } else {
+                        allowedKelas.forEach(k => {
+                            select.innerHTML += `<option value="${k}">Kelas ${k}</option>`;
+                        });
+                    }
+                }
+            });
+        }
+        // ---------------------------------
+
         function logout() {
             state.user = null;
             state.userData = null;
+            
+            // --- MENGHAPUS SESI LOGIN DARI LOCAL STORAGE SAAT LOGOUT ---
+            localStorage.removeItem('ismuba_session');
+            
             document.getElementById('loginSection').classList.remove('hidden');
             document.getElementById('mainDashboard').classList.add('hidden');
             showToast('Berhasil keluar dari sistem.', 'success');
@@ -1497,7 +1517,7 @@
             if(tabId === 'pengaturan') loadPengaturanForm();
             if(tabId === 'mapel') renderMapelTable();
             if(tabId === 'siswa') renderSiswaTable();
-            if(tabId === 'nilai') populateMapelDropdownNilai();
+            if(tabId === 'nilai') populateMapelDropdownNilai(); // Fungsi ini telah dimodifikasi (lihat bawah)
             if(tabId === 'tahfidz') loadTahfidzTable();
             if(tabId === 'pembiasaan') loadPembiasaanTable();
             if(tabId === 'rapor') updateRaporSiswaList();
@@ -1729,7 +1749,6 @@
                     state.siswa[index] = { id, nis, nama, kelas };
                 }
             } else {
-                // MODIFIKASI: Gunakan format ID baru
                 const idSiswaBaru = generateIdSiswaBermakna(kelas, state.siswa);
                 state.siswa.push({
                     id: idSiswaBaru,
@@ -1758,16 +1777,12 @@
             const targetSiswa = state.siswa.find(x => x.id === id);
             const nama = targetSiswa ? targetSiswa.nama : 'Siswa';
 
-            // Langsung hapus seketika tanpa popup konfirmasi
             state.siswa = state.siswa.filter(x => x.id !== id);
             saveDataToStorage();
             renderSiswaTable();
             updateDashboardStats();
 
-            // Notifikasi toast bahwa data telah terhapus
             showToast(`Data siswa "${nama}" berhasil dihapus.`, 'success');
-
-            // Sinkronkan pembaruan ke Google Sheets di background
             sendToGoogleSheets('saveSiswa', { siswa: state.siswa });
         }
 
@@ -1809,7 +1824,6 @@
                         if(nis && nama) {
                             const existing = state.siswa.find(s => s.nis == nis);
                             if(!existing) {
-                                // MODIFIKASI: Gunakan format ID baru saat import excel
                                 const idImportBaru = generateIdSiswaBermakna(String(kelas), state.siswa);
                                 state.siswa.push({
                                     id: idImportBaru,
@@ -1838,17 +1852,35 @@
             reader.readAsArrayBuffer(file);
         }
 
+        // --- FUNGSI FILTER MAPEL GURU ---
         function populateMapelDropdownNilai() {
             const selectMapel = document.getElementById('nilaiSelectMapel');
+            if(!selectMapel) return;
             selectMapel.innerHTML = '';
-            state.mapel.forEach(m => {
-                const opt = document.createElement('option');
-                opt.value = m.id;
-                opt.innerText = `${m.nama} (${m.kode})`;
-                selectMapel.appendChild(opt);
-            });
+            
+            let allowedMapel = [];
+            let isSuperadmin = true;
+
+            if (state.userData && state.userData.role !== 'Superadmin') {
+                isSuperadmin = false;
+                allowedMapel = state.userData.mapel_diampu ? state.userData.mapel_diampu.split(',').map(m => m.trim()) : [];
+            }
+
+            const mapelFiltered = state.mapel.filter(m => isSuperadmin || allowedMapel.includes(m.kode));
+
+            if(mapelFiltered.length === 0) {
+                selectMapel.innerHTML = `<option value="">-- Akses Mapel Kosong --</option>`;
+            } else {
+                mapelFiltered.forEach(m => {
+                    const opt = document.createElement('option');
+                    opt.value = m.id;
+                    opt.innerText = `${m.nama} (${m.kode})`;
+                    selectMapel.appendChild(opt);
+                });
+            }
             loadNilaiForm();
         }
+        // --------------------------------
 
         function calculatePredikatAndDeskripsi(score, kktp, cpText) {
             const val = parseFloat(score);
@@ -1880,6 +1912,23 @@
             const mapelId = document.getElementById('nilaiSelectMapel').value;
             const tbody = document.getElementById('nilaiTableBody');
             tbody.innerHTML = '';
+            const btnSave = document.getElementById('btnSaveNilaiMain');
+
+            // PROTEKSI HAK AKSES
+            if (!kelas || !mapelId) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-5 text-center text-red-600 font-semibold bg-red-50"><i data-lucide="shield-alert" class="w-5 h-5 inline-block mb-1"></i><br>Anda tidak memiliki hak akses untuk mengisi nilai di kelas atau mata pelajaran ini.</td></tr>`;
+                if(btnSave) {
+                    btnSave.disabled = true;
+                    btnSave.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+                lucide.createIcons();
+                return;
+            } else {
+                if(btnSave) {
+                    btnSave.disabled = false;
+                    btnSave.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
 
             const selectedMapelObj = state.mapel.find(m => m.id === mapelId);
             if(!selectedMapelObj) return;
@@ -1892,7 +1941,6 @@
             }
 
             siswaInKelas.forEach((s, idx) => {
-                // FORMAT KEY NILAI BARU (Lebih mudah dibaca oleh manusia)
                 const key = `${s.id}_${selectedMapelObj.kode}_${state.tahunSemester}`;
                 const savedVal = state.nilai[key] !== undefined ? state.nilai[key] : '';
                 const calc = calculatePredikatAndDeskripsi(savedVal, selectedMapelObj.kktp, selectedMapelObj.cp);
@@ -1947,7 +1995,6 @@
                 const siswaId = inp.dataset.siswakid;
                 const mapelKode = inp.dataset.mapelkode;
                 const val = inp.value;
-                // GENERATE KEY BARU SEBELUM SAVE
                 const key = `${siswaId}_${mapelKode}_${state.tahunSemester}`;
                 if (val !== '') {
                     state.nilai[key] = parseFloat(val);
@@ -1986,6 +2033,12 @@
         function exportNilaiExcel() {
             const kelas = document.getElementById('nilaiSelectKelas').value;
             const mapelId = document.getElementById('nilaiSelectMapel').value;
+            
+            if(!kelas || !mapelId) {
+                showToast('Pilih kelas dan mata pelajaran terlebih dahulu.', 'error');
+                return;
+            }
+            
             const mapelObj = state.mapel.find(m => m.id === mapelId);
             const mapelNama = mapelObj ? mapelObj.nama : 'Mapel';
 
@@ -2019,6 +2072,8 @@
             if(!file) return;
 
             const mapelId = document.getElementById('nilaiSelectMapel').value;
+            if(!mapelId) return showToast('Pilih Mata Pelajaran dahulu.', 'error');
+            
             const mapelObj = state.mapel.find(m => m.id === mapelId);
             const reader = new FileReader();
 
@@ -2036,7 +2091,6 @@
                         if(nis !== undefined && score !== undefined) {
                             const student = state.siswa.find(s => s.nis == nis);
                             if(student && mapelObj) {
-                                // GUNAKAN FORMAT KEY BARU SAAT IMPORT
                                 const key = `${student.id}_${mapelObj.kode}_${state.tahunSemester}`;
                                 state.nilai[key] = parseFloat(score);
                                 updated++;
@@ -2078,6 +2132,23 @@
             const kelas = document.getElementById('tahfidzSelectKelas').value;
             const tbody = document.getElementById('tahfidzTableBody');
             tbody.innerHTML = '';
+            const btnSave = document.getElementById('btnSaveTahfidzMain');
+
+            // PROTEKSI HAK AKSES
+            if (!kelas) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-5 text-center text-red-600 font-semibold bg-red-50"><i data-lucide="shield-alert" class="w-5 h-5 inline-block mb-1"></i><br>Anda tidak memiliki hak akses untuk mengisi Tahfidz di kelas ini.</td></tr>`;
+                if(btnSave) {
+                    btnSave.disabled = true;
+                    btnSave.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+                lucide.createIcons();
+                return;
+            } else {
+                if(btnSave) {
+                    btnSave.disabled = false;
+                    btnSave.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
 
             const siswaInKelas = state.siswa.filter(s => s.kelas === kelas);
             if(siswaInKelas.length === 0) {
@@ -2086,7 +2157,6 @@
             }
 
             siswaInKelas.forEach((s, idx) => {
-                // PENAMBAHAN IDENTIFIER TAHFIDZ PADA KEY
                 const key = `${s.id}_TAHFIDZ_${state.tahunSemester}`;
                 let tData = state.tahfidz[key] || {
                     surah: defaultSurahTarget[kelas] || 'Juz 30',
@@ -2152,8 +2222,9 @@
 
         function autoGenerateTahfidzByClass() {
             const kelas = document.getElementById('tahfidzSelectKelas').value;
+            if(!kelas) return showToast('Pilih kelas terlebih dahulu.', 'error');
+            
             const siswaInKelas = state.siswa.filter(s => s.kelas === kelas);
-
             siswaInKelas.forEach(s => {
                 const key = `${s.id}_TAHFIDZ_${state.tahunSemester}`;
                 state.tahfidz[key] = {
@@ -2173,6 +2244,23 @@
             const kelas = document.getElementById('pembiasaanSelectKelas').value;
             const tbody = document.getElementById('pembiasaanTableBody');
             tbody.innerHTML = '';
+            const btnSave = document.getElementById('btnSavePembiasaanMain');
+
+            // PROTEKSI HAK AKSES
+            if (!kelas) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-5 text-center text-red-600 font-semibold bg-red-50"><i data-lucide="shield-alert" class="w-5 h-5 inline-block mb-1"></i><br>Anda tidak memiliki hak akses untuk menilai Pembiasaan Karakter di kelas ini.</td></tr>`;
+                if(btnSave) {
+                    btnSave.disabled = true;
+                    btnSave.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+                lucide.createIcons();
+                return;
+            } else {
+                if(btnSave) {
+                    btnSave.disabled = false;
+                    btnSave.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
 
             const siswaInKelas = state.siswa.filter(s => s.kelas === kelas);
             if(siswaInKelas.length === 0) {
@@ -2181,7 +2269,6 @@
             }
 
             siswaInKelas.forEach((s, idx) => {
-                // PENAMBAHAN IDENTIFIER PEMBIASAAN PADA KEY
                 const key = `${s.id}_PEMBIASAAN_${state.tahunSemester}`;
                 let pData = state.pembiasaan[key] || {
                     predikat: 'Sangat Baik',
@@ -2212,7 +2299,6 @@
         function updatePembiasaan(siswaId, field, value) {
             const key = `${siswaId}_PEMBIASAAN_${state.tahunSemester}`;
             
-            // Jika object belum ada, set default fallback value
             if(!state.pembiasaan[key]) {
                 state.pembiasaan[key] = { 
                     predikat: 'Baik', 
@@ -2222,7 +2308,6 @@
             
             state.pembiasaan[key][field] = value;
 
-            // Auto-generate Deskripsi jika Predikat diubah
             if (field === 'predikat') {
                 let autoDeskripsi = '';
                 if (value === 'Sangat Baik') {
@@ -2239,7 +2324,6 @@
                     state.pembiasaan[key]['deskripsi'] = autoDeskripsi;
                 }
                 
-                // Re-render the table row so the new description reflects in the input immediately
                 loadPembiasaanTable();
             }
 
@@ -2248,8 +2332,9 @@
 
         function autoGeneratePembiasaanByClass() {
             const kelas = document.getElementById('pembiasaanSelectKelas').value;
+            if(!kelas) return showToast('Pilih kelas terlebih dahulu.', 'error');
+            
             const siswaInKelas = state.siswa.filter(s => s.kelas === kelas);
-
             siswaInKelas.forEach(s => {
                 const key = `${s.id}_PEMBIASAAN_${state.tahunSemester}`;
                 state.pembiasaan[key] = {
@@ -2278,6 +2363,12 @@
             const kelas = document.getElementById('raporSelectKelas').value;
             const selectSiswa = document.getElementById('raporSelectSiswa');
             selectSiswa.innerHTML = '';
+
+            if (!kelas) {
+                selectSiswa.innerHTML = '<option value="">-- Tidak ada siswa --</option>';
+                renderRaporSheet();
+                return;
+            }
 
             const siswaInKelas = state.siswa.filter(s => s.kelas === kelas);
             siswaInKelas.forEach(s => {
@@ -2312,13 +2403,11 @@
                 ? new Date(cfg.tanggalCetak).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'}) 
                 : new Date().toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'});
 
-            // Section A: Mapel Marks
             let mapelRowsHTML = '';
             const jenjang = siswa.kelas.substring(0, 1);
             const mapelSiswa = state.mapel.filter(m => m.kelas === 'Semua' || m.kelas === jenjang || m.kelas === siswa.kelas);
             
             mapelSiswa.forEach((m, idx) => {
-                // Membaca Nilai dari Kunci yang Baru (memakai Kode Mapel)
                 const key = `${siswa.id}_${m.kode}_${state.tahunSemester}`;
                 let rawScore = state.nilai[key];
                 
@@ -2337,7 +2426,6 @@
                 `;
             });
 
-            // Bagian B: Tahfidz Al-Qur'an (Membaca Kunci yang Baru)
             const tahfidzKey = `${siswa.id}_TAHFIDZ_${state.tahunSemester}`;
             const tData = state.tahfidz[tahfidzKey] || {
                 surah: defaultSurahTarget[siswa.kelas] || '-',
@@ -2346,7 +2434,6 @@
                 catatan: 'Belum ada penilaian'
             };
 
-            // Bagian C: Pembiasaan Karakter (Membaca Kunci yang Baru)
             const pembiasaanKey = `${siswa.id}_PEMBIASAAN_${state.tahunSemester}`;
             const pData = state.pembiasaan[pembiasaanKey] || {
                 predikat: '-',
@@ -2356,7 +2443,6 @@
             return `
                 <div class="f4-card shadow-lg rounded-sm border border-slate-300 page-break mb-8 bg-white text-slate-900 font-sans text-[10pt] leading-normal flex flex-col justify-between">
                     <div>
-                        <!-- KOP RAPOR ISMUBA RESMI -->
                         <div class="border-b-4 border-double border-slate-900 pb-3 mb-4 text-center">
                             <div class="relative flex items-center justify-center mb-1 min-h-[5.5rem]">
                                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgx_0RkNHbB0s6bXMzSMwreEnoew2ZvUIavhDV3pcgozC6cesZOgnTRv0qP8XqpLZiEpkSTVTa2-22oXCAqc9DBgujPzv0MYIV8bvrbZOB8iPPCdKtzdu1Orbs0AmB_5EICUypKqZVjcc8tHSlAzjVPQ_HcrWmahUixzis_L7B5dr5UXRX1IoQk6BJy-Rhp/s1600/logo%20dikdas%20hijau.png" alt="Logo Dikdasmen" class="absolute left-2 w-20 h-20 object-contain flex-shrink-0">
@@ -2373,7 +2459,6 @@
                             LAPORAN HASIL BELAJAR ISMUBA
                         </div>
 
-                        <!-- IDENTITAS SISWA -->
                         <div class="grid grid-cols-2 gap-x-6 gap-y-1 bg-slate-50 p-2.5 rounded border border-slate-300 mb-4 text-[9.5pt]">
                             <div class="flex"><span class="w-32 font-semibold text-slate-600">Nama Siswa</span><span class="font-bold text-slate-900">: ${siswa.nama}</span></div>
                             <div class="flex"><span class="w-32 font-semibold text-slate-600">Kelas / Semester</span><span class="font-bold text-slate-900">: ${siswa.kelas} / ${semesterText}</span></div>
@@ -2381,7 +2466,6 @@
                             <div class="flex"><span class="w-32 font-semibold text-slate-600">Tahun Ajaran</span><span class="font-bold text-slate-900">: ${tahunAjaran}</span></div>
                         </div>
 
-                        <!-- A. MATA PELAJARAN ISMUBA -->
                         <div class="mb-4">
                             <h4 class="font-bold text-slate-900 text-[10.5pt] mb-1.5 flex items-center gap-1.5">
                                 <span>A. CAPAIAN MATA PELAJARAN ISMUBA</span>
@@ -2403,7 +2487,6 @@
                             </table>
                         </div>
 
-                        <!-- B. CAPAIAN TAHFIDZ AL-QUR'AN -->
                         <div class="mb-4">
                             <h4 class="font-bold text-slate-900 text-[10.5pt] mb-1.5">B. CAPAIAN TAHFIDZ AL-QUR'AN</h4>
                             <table class="w-full border-collapse border border-slate-300 text-[9.5pt]">
@@ -2428,7 +2511,6 @@
                             </table>
                         </div>
 
-                        <!-- C. PEMBIASAAN KARAKTER -->
                         <div class="mb-4">
                             <h4 class="font-bold text-slate-900 text-[10.5pt] mb-1.5">C. PEMBIASAAN KARAKTER ISLAMI</h4>
                             <table class="w-full border-collapse border border-slate-300 text-[9.5pt]">
@@ -2452,7 +2534,6 @@
                         </div>
                     </div>
 
-                    <!-- FOOTER TANDA TANGAN -->
                     <div class="mt-8 flex justify-between text-[10pt] text-slate-900 pb-2">
                         <div class="w-64 text-center">
                             <p class="mb-16">Mengetahui,<br>Kepala Sekolah</p>
@@ -2477,6 +2558,12 @@
             const mode = document.getElementById('raporMode').value;
             const kelas = document.getElementById('raporSelectKelas').value;
             
+            // PROTEKSI HAK AKSES UNTUK VIEW RAPOR
+            if(!kelas) {
+                container.innerHTML = `<div class="p-8 text-center bg-white rounded-lg border text-red-500 font-medium">Anda tidak memiliki hak akses kelas untuk melihat Rapor.</div>`;
+                return;
+            }
+
             if(mode === 'single') {
                 const selectSiswa = document.getElementById('raporSelectSiswa');
                 let siswaId = selectSiswa.value;
@@ -2500,7 +2587,41 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
-            updateRaporSiswaList();
+            
+            // --- PENGECEKAN SESI LOGIN DARI LOCAL STORAGE SAAT HALAMAN DIMUAT ---
+            const savedSession = localStorage.getItem('ismuba_session');
+            
+            if (savedSession) {
+                try {
+                    const session = JSON.parse(savedSession);
+                    state.user = session.user;
+                    state.userData = session.userData;
+                    state.tahunSemester = session.tahunSemester;
+
+                    const displayName = state.userData.nama || state.user.toUpperCase();
+                    document.getElementById('sessionUserDisplay').innerText = displayName;
+                    document.getElementById('sessionTaDisplay').innerText = state.tahunSemester;
+                    document.getElementById('activeSemesterBadge').innerText = state.tahunSemester;
+
+                    const initials = displayName.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+                    document.getElementById('userAvatarBadge').innerText = initials || 'USR';
+
+                    // Sembunyikan halaman login dan tampilkan dashboard
+                    document.getElementById('loginSection').classList.add('hidden');
+                    document.getElementById('mainDashboard').classList.remove('hidden');
+
+                    // Terapkan kembali filter data sesuai role guru
+                    applyTeacherClassFilter();
+                    populateMapelDropdownNilai();
+                    initDashboardData();
+                } catch (e) {
+                    console.error("Gagal membaca session:", e);
+                    updateRaporSiswaList();
+                }
+            } else {
+                // Jika tidak ada session, biarkan di halaman login
+                updateRaporSiswaList();
+            }
         });
     </script>
 </body>
